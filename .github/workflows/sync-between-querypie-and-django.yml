@@ -20,6 +20,4 @@ jobs:
           SLACK_DEPLOY_HOOK: ${{ secrets.SLACK_DEPLOY_HOOK }}
         run: |
           pipenv install --system --ignore-pipfile --dev
-          
-          python manage.py querypie_access_rule_update_command --policy-uuid=UUID
-          ./notify_slack_for_querypie.sh # 슬랙 알림 전송
+          python manage.py querypie_access_rule_sync_command --policy-uuid=UUID --dry-run=False
