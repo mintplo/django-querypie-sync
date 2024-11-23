@@ -8,7 +8,7 @@ class Employee(models.Model, SensitiveFieldMixin):
 
     user_id = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
+    email = models.EmailField()
     phone_number = models.CharField(max_length=12)
     age = models.IntegerField()
     salary = models.DecimalField(max_digits=10, decimal_places=2)
