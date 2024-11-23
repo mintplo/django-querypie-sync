@@ -1,0 +1,25 @@
+name: "Querypie 정책 동기화"
+
+on:
+  workflow_dispatch: # 수동 실행 옵션
+  push:
+    branches:
+      - main # 마스터 브랜치 푸시 시 실행
+    paths:
+      - 'company/**/models.py' # 모델 파일 변경 시 실행
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run sync command
+        shell: bash
+        env:
+          QUERYPIE_API_TOKEN: ${{ secrets.QUERYPIE_API_TOKEN }}
+          SLACK_DEPLOY_HOOK: ${{ secrets.SLACK_DEPLOY_HOOK }}
+        run: |
+          pipenv install --system --ignore-pipfile --dev
+          
+          python manage.py querypie_access_rule_update_command --policy-uuid=UUID
+          ./notify_slack_for_querypie.sh # 슬랙 알림 전송
