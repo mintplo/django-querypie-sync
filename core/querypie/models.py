@@ -11,7 +11,7 @@ class Rule(BaseModel):
 
     uuid: str
     objectType: str  # 어떤 단위의 규칙인지 정의 -> "COLUMN"
-    # ["lemonbase", "table_name", "column_name"] or ["/lemonbase/i", "/table_name/i", "/column_name/i"]
+    # ["database", "table_name", "column_name"] or ["/database/i", "/table_name/i", "/column_name/i"]
     objectPath: list[str]
 
     def get_table_name(self) -> str | None:
