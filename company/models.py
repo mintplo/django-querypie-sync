@@ -1,7 +1,12 @@
 from django.db import models
 
+from core.models import SensitiveFieldMixin
 
-class Employee(models.Model):
+
+class Employee(models.Model, SensitiveFieldMixin):
+    sensitive_fields = ["email", "phone_number", "salary"]
+
+    user_id = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=12)
@@ -15,7 +20,9 @@ class Employee(models.Model):
         return self.name
 
 
-class Department(models.Model):
+class Department(models.Model, SensitiveFieldMixin):
+    sensitive_fields = ["name"]
+
     name = models.CharField(max_length=100)
     employees = models.ManyToManyField(Employee, related_name="departments")
 
